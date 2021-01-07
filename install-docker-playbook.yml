@@ -4,6 +4,13 @@
   hosts: all
 
   tasks:
+    - name: Update repositories cache and install "python3-pip" package
+      become: yes
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+
     - name: Install Docker
       become: yes
       register: docker_install_result
@@ -12,6 +19,11 @@
         sh get-docker.sh
 
     - debug: msg="{{docker_install_result.stdout_lines}}"
+
+    - name: Install Docker Compose
+      become: yes
+      command:
+        cmd: pip3 install docker-compose
 
     - name: Add permission to Pi to run Docker commands
       become: yes
