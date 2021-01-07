@@ -1,0 +1,24 @@
+---
+- name: Install Docker for use with Greengrass
+
+  hosts: all
+
+  tasks:
+    - name: Install Docker
+      become: yes
+      register: docker_install_result
+      shell: |
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sh get-docker.sh
+
+    - debug: msg="{{docker_install_result.stdout_lines}}"
+
+    - name: Add permission to Pi to run Docker commands
+      become: yes
+      command:
+        cmd: usermod -aG docker pi
+
+    - name: Add permission to Greengrass User to run Docker commands
+      become: yes
+      command:
+        cmd: usermod -aG docker ggc_user

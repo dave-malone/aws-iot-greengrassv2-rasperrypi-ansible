@@ -45,3 +45,7 @@ As stated in the documentation, the IAM Role attached to the IoT Role Alias used
 Then, you will need to create the IAM policy and attach it to your Greengrass IAM role.
 
 See the following documentation for more information: https://docs.aws.amazon.com/greengrass/v2/developerguide/device-service-role.html#device-service-role-access-s3-bucket
+
+## Install Docker for use with Greengrass applications
+
+`ansible-playbook install-docker-playbook.yml -i ./hosts -u pi`
