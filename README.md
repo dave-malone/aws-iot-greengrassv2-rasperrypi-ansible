@@ -49,3 +49,9 @@ See the following documentation for more information: https://docs.aws.amazon.co
 ## Install Docker for use with Greengrass applications
 
 `ansible-playbook install-docker-playbook.yml -i ./hosts -u pi`
+
+
+## Resources
+
+* https://docs.ansible.com/ansible/latest/user_guide/index.html
+* https://docs.aws.amazon.com/greengrass/v2/developerguide/getting-started.html

@@ -33,6 +33,11 @@
         url: https://d2s8p88vqu9w66.cloudfront.net/releases/greengrass-nucleus-latest.zip
         dest: /home/pi/greengrass-nucleus-latest.zip
 
+    - name: Create the Greengrass directory
+      file:
+        path: /home/pi/GreengrassCore
+        state: directory
+
     - name: Unzip downloaded Greengrass Nucleus package
       unarchive:
         src: /home/pi/greengrass-nucleus-latest.zip
@@ -41,11 +46,12 @@
 
     - name: Install Greengrass Nucleus
       register: install_results
+      become: yes
       environment:
         AWS_ACCESS_KEY_ID: "{{ aws_access_key_id }}"
         AWS_SECRET_ACCESS_KEY: "{{ aws_secret_access_key }}"
       shell: |
-        sudo -E java -Dlog.store=FILE \
+        java -Dlog.store=FILE \
           -jar ./GreengrassCore/lib/Greengrass.jar \
           --aws-region {{ aws_region }} \
           --root /greengrass/v2 \
@@ -58,7 +64,7 @@
           --setup-system-service true \
           --deploy-dev-tools true
 
-        sudo chmod 755 /greengrass/v2 && sudo chmod 755 /greengrass
+        chmod 755 /greengrass/v2 && chmod 755 /greengrass
 
     - debug: msg="{{install_results.stdout_lines}}"
 
